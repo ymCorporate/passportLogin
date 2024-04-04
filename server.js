@@ -201,4 +201,4 @@ app.listen(3000)
 //         req.flash('error', 'An unexpected error occurred');
 //         res.redirect('/register');
 //     }
-// }
+
