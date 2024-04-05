@@ -1,13 +1,10 @@
-if(process.env.NODE_ENV != "production"){
-    require('dotenv').config({path:'.env.test'});
-}
-
-const request = require('supertest');
-const express = require('express');
-const passport = require('passport');
-const session = require('express-session');
-const bcrypt = require('bcrypt');
-const initPassport = require('./passport-config');
+import dotenv from 'dotenv';
+import request from 'supertest';
+import express from 'express';
+import passport from 'passport';
+import session from 'express-session';
+import bcrypt from 'bcrypt';
+import initPassport from './passport-config.mjs';
 
 // Mock users data for testing
 const users = [
@@ -20,6 +17,11 @@ const users = [
 ];
 
 const app = express();
+
+// Load environment variables
+if (process.env.NODE_ENV !== "production") {
+    dotenv.config({ path: '.env.test' });
+}
 
 // Mocking middleware functions
 app.use(express.urlencoded({ extended: false }));
