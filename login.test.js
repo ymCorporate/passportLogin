@@ -58,7 +58,7 @@ app.get('/logout', (req, res) => {
 });
 
 // Sample protected route
-app.get('/profile', (req, res) => {
+app.get('/', (req, res) => {
     if (req.isAuthenticated()) {
         res.status(200).send(`Welcome ${req.user.name}`);
     } else {
@@ -90,7 +90,7 @@ describe('Authentication', () => {
     });
 
     it('should not access protected route without logging in', async () => {
-        const res = await request(app).get('/profile');
+        const res = await request(app).get('/');
         expect(res.statusCode).toEqual(401);
     });
 

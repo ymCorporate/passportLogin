@@ -79,9 +79,11 @@ function checkNotAuth(req,res,next){
     next()
 }
 
-function deleteUser(req,res){
-    req.logOut(req,res)
-    req.redirect('/login')
+function deleteUser(req,res,next){
+    req.logout(function(err){
+        if(err){return next(err);}
+        res.redirect('/');
+    })
 }
 
 // function logout(req, res) {
