@@ -53,10 +53,12 @@ const loginSchema = Joi.object({
 
 function renderIndex (req, res) {
     res.render('index.ejs',{ name: req.user.name})
+    console.log(req.sessionID)
 }
 
 function renderLogin (req, res) {
     res.render('login.ejs')
+    console.log(req.sessionID);
 }
 
 function renderRegister (req, res) {
@@ -80,10 +82,13 @@ function checkNotAuth(req,res,next){
 }
 
 function deleteUser(req,res,next){
-    req.logout(function(err){
-        if(err){return next(err);}
+    req.session.destroy((err)=>{
         res.redirect('/');
     })
+    // req.logout(function(err){
+    //     if(err){return next(err);}
+    //     res.redirect('/');
+    // })
 }
 
 // function logout(req, res) {
@@ -106,6 +111,7 @@ async function authenticateUser(req, res)  {
             failureRedirect: '/login',
             failureFlash: true,
         })(req, res);
+        req.flash('message', 'Welcome to the server');
     }
     catch (err) {
         console.error(err);
@@ -131,6 +137,7 @@ async function postReg (req, res) {
             password:hashedPassword
         })
         res.redirect('/login')
+        req.flash('message', 'Successfully registered')
     }
     catch(err){
         console.error(err);
